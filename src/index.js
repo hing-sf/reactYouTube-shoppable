@@ -6,36 +6,24 @@ import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
+const API_KEY = require('./config/key');
 
-const API_KEY = 'AIzaSyAEegoUppdyrqlMxFuxgKmBJi0mUV58PMo';
-const BING_API_KEY = 'f3be3b2829a3440584c354c69561e9d1';
+// const API_KEY = 'AIzaSyAEegoUppdyrqlMxFuxgKmBJi0mUV58PMo';
 
 class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            trendingCelebs: {},
             videos: [],
             selectedVideo: null,
             searchTerm: 'javascript'
          };
-         this.videoSearch('surfboards')
-
-        let term = 'Actor';
-        let url = `https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=Trending+${ term }&count=20&offset=0&mkt=en-us&safeSearch=Moderate`;
-
-        self = this;
-        axios.get(url, {
-            headers: { "Ocp-Apim-Subscription-Key": BING_API_KEY }
-            })
-            .then( function(res)  {
-                self.setState({ trendingCelebs: res.data.queryExpansions })
-        })
+         this.videoSearch('stephen grider')
     }
 
     videoSearch( term ) {
-        YTSearch({ key: API_KEY, term: term}, ( videos ) => {
+        YTSearch({ key: API_KEY.GOOGLE_API_KEY, term: term}, ( videos ) => {
             this.setState({
                 videos: videos,
                 selectedVideo: videos[0]
