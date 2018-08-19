@@ -8,7 +8,6 @@ import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
 import YouTubePlayer from './components/youtubePlayer';
 
-
 const API_KEY = require('../config/key');
 
 class App extends Component {
@@ -19,7 +18,7 @@ class App extends Component {
             videos: [],
             selectedVideo: null
          };
-         this.videoSearch('stephen grider')
+         this.videoSearch('javascript')
     }
 
     videoSearch( term ) {
@@ -39,7 +38,7 @@ class App extends Component {
             <div>
             <SearchBar onSearchTermChange={ videoSearch } />
             <YouTubePlayer video={ this.state.selectedVideo } />
-            <VideoDetail video={ this.state.selectedVideo } />
+            {/* <VideoDetail video={ this.state.selectedVideo } /> */}
 
             <VideoList
                 onVideoSelect={ selectedVideo => this.setState({ selectedVideo }) }

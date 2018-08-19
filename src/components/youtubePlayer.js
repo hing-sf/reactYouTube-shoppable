@@ -3,53 +3,69 @@ import YouTube from 'react-youtube';
 
 class YouTubePlayer extends React.Component {
 
-        constructor( props ){
-            super( props );
+    constructor( props ){
+        super( props );
 
+        this.callFunction = this.callFunction.bind(this);
+        this._onReady = this._onReady.bind(this);
+    }
+
+    render() {
+        // let videoId = this.props.video !== null ? this.props.video.id.videoId : '';
+
+        let videoDetail;
+
+        if ( this.props.video !== null ) {
+            videoDetail = this.props.video;
+        } else {
+            return <div>Loading....</div>;
         }
 
-      render() {
-
-        let videoId = this.props.video !== null ? this.props.video.id.videoId : '';
-
         const opts = {
-          playerVars: { // https://developers.google.com/youtube/player_parameters
+            playerVars: { // https://developers.google.com/youtube/player_parameters
             autoplay: 0
-          }
+            }
         };
 
         return (
-            <div className="video-detail col-md-12">
+            <div className="video-detail col-md-8">
                 <div className="embed-responsive embed-responsive-16by9">
                     <YouTube
-                            videoId={ videoId }
+                            className="embed-responsive-item"
+                            videoId={ videoDetail.id.videoId }
                             opts={opts}
-                            // onPlay={ this.getCurrentTime( event.target ) }
-                            onReady={this._onReady}
+                            onPause={ this.getElapsedTime }
+                            onReady={ this._onReady }
                         />
                 </div>
+                <div className="details">
+                <div>{ videoDetail.snippet.title }</div>
+                <div>{ videoDetail.snippet.description }</div>
+            </div>
             </div>
         );
 
-      }
-
-      getCurrentTime( e ){
-        var currentTime;
-        console.log(e)
-        e.getCurrentTime();
-        // setInterval(function(){
-        //     currentTime = Math.round(player.getCurrentTime())
-        //     if(currentTime == 10){
-        //         console.log('its 10 seconds')
-        //     }
-        //     console.log(currentTime)
-        // },1000);
     }
 
-      _onReady(event) {
+    callFunction(){
+        console.log(`Action set at ${setAction}`)
+    }
+
+    _onReady(event) {
         // access to player in all event handlers via event.target
-        event.target.pauseVideo();
-      }
-    }
+        // event.target.pauseVideo();
+        let currentTime;
+        let doSomething = 2;
 
-    export default YouTubePlayer;
+        setInterval( () => {
+            currentTime = Math.round(event.target.getCurrentTime());
+            // console.log(currentTime);
+            if( currentTime === doSomething ){
+                console.log(`doSomething at ${doSomething} seconds`);
+            }
+        },1000);
+
+    }
+ }
+
+export default YouTubePlayer;
